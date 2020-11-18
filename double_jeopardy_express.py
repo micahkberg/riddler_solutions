@@ -1,13 +1,11 @@
 # -*- coding: utf-8 -*-
 """
 Created on Wed Nov 18 10:05:15 2020
-
-@author: bobth
 """
 
 import random
 
-rows = [200,400,600,800,1000]
+rows = [200.0,400.0,600.0,800.0,1000.0]
 column_count = 6
 def game(guess_method):
     
@@ -32,23 +30,22 @@ def game(guess_method):
     return sum(winnings_list)
 
 
-def run_test(runs):
+def test(mode, runs):
+    avg = 0.0
+    for i in range(1,runs):
+        new_result = game(mode)
+        avg = avg*(i-1)/i + new_result/i
+    return avg
+
+def run_tests(runs):
     
-    #linear test
-    lin_results = []
-    for i in range(0,runs):
-        new_result = game("linear")
-        lin_results.append(new_result)
-    
-    rand_results = []
-    for i in range(0,runs):
-        new_result = game("random")
-        rand_results.append(new_result)
-    
-    lin_avg = sum(lin_results)/len(lin_results)
-    rand_avg = sum(rand_results)/len(rand_results)
+    #linear order test
+    lin_avg = test("linear", runs)
+    #random order test    
+    rand_avg = test("random", runs)
+
     
     print("results of linear guessing strategy: " + str(lin_avg))
     print("results of random guessing strategy: " + str(rand_avg))
     
-run_test(1000000)
+run_tests(1000000)
